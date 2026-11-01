@@ -11,14 +11,6 @@
     margin: 5px 0;
     color: black;
 }
-.flexBox a:focus{
-    outline: none;
-}
-
-.flexBox{
-    display: flex;
-    flex-wrap: wrap;
-}
 
 .flexTable a:hover{
     background: black;
@@ -38,12 +30,27 @@
     list-style: none;
 }
 
+.flexBox{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
 .content{
     padding: 20px 40px 40px 20px;
     width: 100%;
     position: relative;
     overflow: auto;
     z-index: 0;
+}
+
+/* Keep in-page anchors clear of the fixed navbar. */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5{
+    scroll-margin-top: 100px;
 }
 
 .content h1{
@@ -66,7 +73,7 @@
     display: block;
     font-size: 16pt;
     margin-bottom: 20px;
-    font-family: 'Lato', sans-serif;
+    font-family: var(--font-lato), sans-serif;
 }
 
 .content h4{
@@ -86,11 +93,6 @@
     font-weight: bold;
 }
 
-.flexBox{
-    display: flex;
-    margin-bottom: 20px;
-}
-
 .imgCon{
     display: flex;
     justify-content: center;
@@ -100,11 +102,34 @@
 
 .imgCon img{
     max-width: 100%;
+    width: auto;
     height: auto;
+}
+
+.imgCol{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.figure{
+    padding: 20px;
+    text-align: center;
+    scroll-margin-top: 100px;
+}
+
+.figCaption{
+    margin-top: 10px;
+}
+
+.numberedList{
+    margin-left: 20px;
+    font-size: 14pt;
 }
 
 .content img{
     max-width: 100%;
+    width: auto;
     height: auto;
     object-fit: contain;
 }
@@ -128,5 +153,61 @@
     .content h3{
         font-size: 27pt;
         margin: 20px 0;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    .content{
+        padding: 16px 20px 32px 16px;
+    }
+
+    .content h1{
+        font-size: 38pt;
+    }
+
+    .content h2{
+        font-size: 30pt;
+    }
+
+    .content h3{
+        font-size: 24pt;
+    }
+
+    .content h4{
+        font-size: 15pt;
+    }
+
+    .content p{
+        font-size: 15pt;
+    }
+
+    .content span{
+        font-size: 16pt;
+    }
+
+    .figure{
+        padding: 12px 0;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .content h1{
+        font-size: 30pt;
+    }
+
+    .content h2{
+        font-size: 25pt;
+    }
+
+    .content h3{
+        font-size: 21pt;
+    }
+
+    .content p{
+        font-size: 14pt;
+    }
+
+    .content span{
+        font-size: 15pt;
     }
 }

@@ -1,110 +1,143 @@
-.card{
-    background: white;
-    position: relative;
-    width: min(900px, 100%);
-    height: 675px;
-    animation-name: grow-in;
-    animation-duration: 0.25s;
+.card {
+  background: white;
+  position: relative;
+  width: min(900px, 100%);
+  height: min(675px, calc(100dvh - 40px));
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  animation: grow-in 0.25s ease-out;
 }
 
+/* Animate transform/opacity (compositor-only) instead of width/height, which
+   forced a layout on every frame and overflowed narrow screens. */
 @keyframes grow-in {
-    0% {
-        width:765px;
-        height: 573.75px;
-        opacity: 0.6;
-    }
-    100%{
-        width: 900px;
-        height: 675px;
-        opacity: 1;
-    }
+  from {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-.innerGrid{
-    display: grid;
-    grid-template-columns: 20% 80%;
-    height:100%;
+.innerGrid {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  height: 100%;
+  min-height: 0;
 }
 
-.sideImg{
-    width: 100%;
-    height: 100%;
+.sideImg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-.leftBox{
-    width: 100%;
-    height:100%;
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.topCard{
-    display: flex;
-    justify-content: space-between;
-    background-color: black;
-
+.leftBox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
-.topCard div{
-    display: flex;
-    flex-wrap: wrap;
+.topCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: black;
+  flex-shrink: 0;
 }
 
-.topCard div > *{
-    color: white;
-    padding: 4px 10px;
-    border: 2px solid white;
-    border-radius: 15px;
-    margin: 10px 5px;
+.topCard div {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.imgCon{
-    cursor: pointer;
-    padding: 10px 5px;
-    transition: background ease 0.2s;
+.topCard div > * {
+  color: white;
+  padding: 4px 10px;
+  border: 2px solid white;
+  border-radius: 15px;
+  margin: 10px 5px;
 }
 
-.imgCon:hover{
-    background-color: red;
+.imgCon {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  padding: 10px 5px;
+  transition: background ease 0.2s;
 }
 
-.content{
-    padding: 30px 50px 0 50px;
+.imgCon:hover {
+  background-color: red;
 }
 
-.content > *{
-    font-family: 'Lexend Deca', sans-serif;
-    
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 30px 50px 0 50px;
 }
 
-.content h2{
-    font-size: 30pt;
-    margin-bottom: 20px;
-    text-align: center;
+.content > * {
+  font-family: var(--font-lexend), sans-serif;
 }
 
-.content p:last-child{
-    margin-bottom: 30px;
+.content h2 {
+  font-size: 30pt;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.btnCont{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.content > :last-child {
+  margin-bottom: 30px;
+}
+
+.btnCont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .content b {
-    font-size: large;
+  font-size: large;
 }
 
-@media only screen and (max-width: 700px){
-    .innerGrid{
-        grid-template-columns: 0% 100%;
-    }
+@media only screen and (max-width: 700px) {
+  .innerGrid {
+    grid-template-columns: 100%;
+  }
 
-    .leftBox{
-        overflow-y: scroll;
-    }
+  .sideImg {
+    display: none;
+  }
 
-    .leftBox::-webkit-scrollbar{
-        width: 2px;
-    }
+  .content {
+    padding: 20px 20px 0 20px;
+  }
+
+  .content h2 {
+    font-size: 22pt;
+  }
+
+  .topCard div > * {
+    font-size: 12px;
+    padding: 3px 8px;
+    margin: 6px 3px;
+  }
 }

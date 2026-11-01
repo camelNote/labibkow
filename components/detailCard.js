@@ -1,56 +1,70 @@
+"use client";
+
+import Image from "next/image";
 import ArrBtn from "./arrBtn";
 import styles from "@/styles/defCard.module.css";
-import Image from 'next/image';
+import { detailImages } from "@/lib/projectImages";
+import cancelIcon from "@/public/project/cancel.svg";
 
-export default function DefCard({theDict,vis, setVis}){
-    let tagArr = [];
-    const tags = theDict.tags;
-    const imgLink = theDict.imgLink;
-    const theme = theDict.theme;
-    const text = theDict.text;
-    const hover = theDict.hover;
-    const title = theDict.title;
-    const btnLink = theDict.btnLink;
-    const theWin = theDict.theWin || false;
+export default function DetailCard({ project, onClose }) {
+  const image = detailImages[project.slug];
 
-    const handleClick = () => {
-        setVis(false);
-    }
+  return (
+    <div
+      className={styles.card}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-dialog-title"
+      onClick={(event) => event.stopPropagation()}
+    >
+      <div className={styles.innerGrid}>
+        <div className={styles.sideImg}>
+          <Image
+            src={image}
+            alt=""
+            width={image.width}
+            height={image.height}
+            className={styles.image}
+          />
+        </div>
 
-    for(let i = 0; i < tags.length; i++){
-        tagArr.push(
-            <div key={tags[i]}>{tags[i]}</div>
-        )
-    }
-
-    return (
-            <div className={styles.card} style={{
-                display: `${vis?"block":"none"}`,
-            }}>
-                <div className={styles.innerGrid}>
-                    <div className={styles.sideImg} style={{
-                        backgroundImage: `url("/project/${imgLink}")`,
-                    }}/>
-
-                    <div className={styles.leftBox}>
-                        <div className={styles.topCard}>
-                            <div>{tagArr}</div>
-                            <span className={styles.imgCon} onClick={handleClick}>
-                            <Image src="/project/cancel.svg"
-                                alt="Left arrow"
-                                width={30}
-                                height={30} />
-                            </span>
-                        </div>
-                        <div className={styles.content}>
-                            <h2>{title}</h2>
-                            <p dangerouslySetInnerHTML={{ __html: text }} />
-                        </div>
-                        <div className={styles.btnCont}>
-                            <ArrBtn content="More details" color={theme} hoverColor={hover} btnLink={btnLink} newWin={theWin}/>
-                        </div>
-                    </div>
-                </div>
+        <div className={styles.leftBox}>
+          <div className={styles.topCard}>
+            <div className={styles.tags}>
+              {project.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
             </div>
-    )
+            <button
+              type="button"
+              className={styles.imgCon}
+              onClick={onClose}
+              aria-label="Close project details"
+              autoFocus
+            >
+              <Image src={cancelIcon} alt="" width={30} height={30} />
+            </button>
+          </div>
+
+          <div className={styles.content}>
+            <h2 id="project-dialog-title">{project.title}</h2>
+            <div
+              className={styles.body}
+              dangerouslySetInnerHTML={{ __html: project.text }}
+            />
+          </div>
+
+          <div className={styles.btnCont}>
+            <ArrBtn
+              content="More details"
+              color={project.theme}
+              hoverColor={project.hover}
+              btnLink={project.btnLink}
+              newWin={project.theWin}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -1,15 +1,17 @@
 .button{
+    display: inline-block;
     background: #bdc3c7;
     color: black;
     text-align: center;
     padding: 15px 30px;
     transition: ease 0.2s;
     border: none;
-    font-family: 'Lexend Deca', sans-serif;
+    font-family: var(--font-lexend), sans-serif;
     cursor: pointer;
     font-size: 14pt;
     border-radius: 2px;
     margin: 0 5px;
+    max-width: 100%;
 }
 
 .button:hover{

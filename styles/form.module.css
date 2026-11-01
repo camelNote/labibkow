@@ -1,9 +1,44 @@
+.page{
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 30px min(60px, 5%) 30px;
+}
+
+.columns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(24px, 3vw, 48px);
+    align-items: start;
+}
+
+.mainCon{
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0 0 25px;
+}
+
+.mainCon h1{
+    font-size: clamp(34px, 3.4vw, 54px);
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+
+.mainCon p{
+    font-size: clamp(14pt, 1.3vw, 16pt);
+    line-height: 1.5;
+}
+
 .flexCon{
+    grid-column: 1;
+    grid-row: 2;
     background:#11101b;
-    width: max(900px, 40%);
-    height: 500px;
-    font-family: 'Lexend Deca', sans-serif;
-    padding-top: 10px;
+    width:100%;
+    min-height:500px;
+    font-family: var(--font-lexend), sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
 }
 
 .flexCon form > *{
@@ -16,18 +51,24 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .flexCon form input{
     background: #ecf0f1;
     margin-bottom: 10px;
     text-align: center;
-    font-family: 'Lexend Deca', sans-serif;
-    padding: 5px 30px;
+    font-family: var(--font-lexend), sans-serif;
+    padding: 7px 20px;
+    width: min(360px, 80%);
 }
 
 .flexCon form textarea{
     background: #ecf0f1;
+    width: min(460px, 80%);
+    height: 190px;
+    font-family: var(--font-lexend), sans-serif;
+    padding: 10px;
 }
 
 .flexCon form input:focus{
@@ -38,53 +79,142 @@
     background: white;
 }
 
-.flexCon form textarea{
-    width: min(700px, 70%);
-    height: 200px;
-    font-family: 'Lexend Deca', sans-serif;
-    padding: 10px;
+.flexCon form input[aria-invalid="true"],
+.flexCon form textarea[aria-invalid="true"]{
+    box-shadow: inset 0 0 0 2px #e74c3c;
+}
+
+.fieldError{
+    color: #ff8a80;
+    font-family: var(--font-lexend), sans-serif;
+    font-size: 11pt;
+    line-height: 1.35;
+    text-align: left;
+    width: min(360px, 80%);
+    margin: -4px 0 10px;
+}
+
+.fieldErrorWide{
+    width: min(460px, 80%);
 }
 
 .flexCon label{
     color: white;
-    font-size: 18pt;
-    padding: 10px;
+    font-size: 16pt;
+    padding: 8px;
 }
 
 .flexCon form input[type="submit"]{
     background: #27ae60;
-    width:300px;
-    height:30px;
-    margin:10px 0;
+    width: 260px;
+    height: 32px;
+    margin: 12px 0 0;
     cursor: pointer;
     transition: ease 0.1s;
 }
 
 .flexCon form input[type="submit"]:hover{
     background: #2ecc71;
-    width:250px;
-    height:30px;
-    margin:10px 0;
+    width: 230px;
+    height: 32px;
+    margin: 12px 0 0;
+}
+
+.flexCon form input[type="submit"]:disabled{
+    opacity: 0.6;
+    cursor: progress;
+}
+
+.linksCol{
+    grid-column: 2;
+    grid-row: 2;
+    align-self: stretch;
+    display: flex;
+}
+
+.linksCard{
+    background: #11101b;
+    color: #fefefe;
+    font-family: var(--font-lexend), sans-serif;
+    width: 100%;
+    height: 100%;
+    padding: clamp(28px, 3vw, 48px);
+}
+
+.linksCard h2{
+    font-size: clamp(24px, 2.2vw, 34px);
+    margin-bottom: 10px;
+}
+
+.linksIntro{
+    color: #bdc3c7;
+    font-size: clamp(12pt, 1.05vw, 14pt);
+    line-height: 1.5;
+    margin-bottom: 28px;
+}
+
+.linkList{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.socialLink{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 14px;
+    color: #fefefe;
+    border: 1px solid rgba(254, 254, 254, 0.14);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.socialLink:hover,
+.socialLink:focus-visible{
+    background: rgba(46, 204, 113, 0.12);
+    border-color: #2ecc71;
+    transform: translateX(4px);
+    outline: none;
+}
+
+.iconWrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 50%;
+    background: rgba(254, 254, 254, 0.1);
+    transition: background 0.2s ease;
+}
+
+.socialLink:hover .iconWrap,
+.socialLink:focus-visible .iconWrap{
+    background: rgba(46, 204, 113, 0.28);
+}
+
+.linkText{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.linkName{
+    font-size: clamp(13pt, 1.2vw, 15pt);
+}
+
+.linkHandle{
+    color: #bdc3c7;
+    font-size: clamp(10pt, 0.95vw, 11pt);
 }
 
 .note{
-    padding:20px min(70px, 10%);
-    text-align: center;
-}
-
-.mainCon{
-    text-align: center;
-    padding:20px min(70px, 10%);
-}
-
-.mainCon h1{
-    margin: 20px 0;
-    font-size: 54pt;
-}
-
-.mainCon p{
-    font-size: 16pt;
-    margin-bottom: min(30px, 30%);
+    grid-column: 1;
+    grid-row: 3;
+    padding: 14px 0 0;
+    font-size: clamp(11pt, 1vw, 12pt);
+    color: #5d6d7e;
 }
 
 .msgScreen{
@@ -96,6 +226,7 @@
     justify-content: center;
     color: white;
     animation: popIn 0.5s;
+    z-index: 20;
 
 }
 
@@ -112,17 +243,22 @@
 .msgScreen div{
     background: black;
     width: min(750px, 100%);
-    height: 150px;
+    min-height: 150px;
     text-align: center;
 }
 
-.msgScreen div span{
+.msgScreen div button{
     float: right;
     padding: 5px 10px;
     font-size: 21pt;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s ease;
+    background: none;
+    border: 0;
+    color: inherit;
+    font-family: inherit;
+    line-height: 1;
 }
 
 .msgScreen div h1{
@@ -134,7 +270,45 @@
     font-size: min(16pt, 4vw);
 }
 
-.msgScreen div span:hover{
+.msgScreen div button:hover{
     background: red;
 }
 
+@media only screen and (max-width: 900px){
+    .page{
+        padding: 20px 20px 30px;
+    }
+
+    .columns{
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .mainCon{
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .note{
+        text-align: center;
+        padding-top: 0;
+    }
+
+    .flexCon{
+        height: auto;
+        padding: 24px 0;
+    }
+
+    .flexCon form input{
+        width: min(360px, 90%);
+    }
+
+    .flexCon form textarea{
+        width: 90%;
+    }
+
+    .linksCard{
+        padding: 28px 20px;
+    }
+}

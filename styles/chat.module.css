@@ -1,149 +1,212 @@
-.flexCon{
-    background: black;
-    width: 100%;
-    height: 350px;
-    color:white;
-    display: grid;
-    grid-template-columns: 5% 90% 5%;
+.flexDis {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-gap: 50px;
+  padding: 100px 100px;
+  min-height: 500px;
+  width: 100%;
 }
 
-#imgSlide div p{
-    display: block;
-    color: #30336b;
-    text-align: center;
-    padding-top: 10px;
-    margin-bottom: 50px;
+.response::before {
+  display: block;
+  background-color: #11101b;
+  width: 20%;
+  height: 10px;
+  content: "";
+  margin-bottom: 20px;
 }
 
-.hidden{
-    opacity: 0 !important;
-    cursor: default !important;
+/* Typed.js writes into this element, so React never owns its children. */
+.typed {
+  font-weight: 580;
+  line-height: 1.75;
+  font-family: var(--font-lato), sans-serif;
+  display: inline;
+  font-size: 22pt;
 }
 
-.flexCon > *{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.typed > ul {
+  list-style: disc;
+  display: block;
 }
 
-.slider{
-    height:100%;
-    flex-wrap: wrap;
-    gap: 0;
+/* Static copy of the current answer for crawlers / no-JS readers. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.btnArrow{
-    color: #fff;
-    transition: 0.2s;
-    cursor: pointer;
+.imgSlide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.btnRight:hover{
-    background: linear-gradient(to right, black, #27ae60);
+.imgFigure {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  transition: transform 0.2s ease;
 }
 
-.btnLeft:hover{
-    background: linear-gradient(to left, black, #27ae60);
+.imgFigure img {
+  margin: 10px;
+  max-width: calc(100% - 20px);
+  height: auto;
+  aspect-ratio: 1;
 }
 
-.flexDis{
-    display: grid;
-    grid-template-columns: 60% 40%;
-    grid-gap: 50px;
-    padding: 100px 100px;
-    min-height: 500px;
-    width: 100%;
+.imgFigure figcaption {
+  display: block;
+  color: #30336b;
+  text-align: center;
+  padding-top: 10px;
+  margin-bottom: 50px;
 }
 
-.flexDis #response:nth-child(1)::before{
-    display: block;
-    background-color: #11101b;
-    width: 20%;
-    height:10px;
-    content: "";
-    margin-bottom: 20px;
+.displayImg {
+  border-radius: 100%;
 }
 
-#imgSlide div{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    transition: transform 0.2s ease;
+.flexCon {
+  background: black;
+  width: 100%;
+  height: 350px;
+  color: white;
+  display: grid;
+  grid-template-columns: 5% 90% 5%;
 }
 
-#imgSlide div img{
-    margin: 10px;
+.flexCon > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#displayImg{
-    border-radius: 100%;
+.slider {
+  height: 100%;
+  flex-wrap: wrap;
+  gap: 0;
 }
 
-#response > *{
-    font-weight: 580;
-    line-height: 1.75;
-    font-family: 'Lato', sans-serif;
-    display: inline;
-    font-size: 22pt;
+.btnArrow {
+  color: #fff;
+  transition: 0.2s;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  line-height: 0;
 }
 
-#response > div > ul{
-    list-style: disc;
-    display: block;
+.btnArrow:disabled {
+  cursor: default;
 }
 
-.btnActive{
-    background-color: #27ae60;
+.btnRight:not(:disabled):hover {
+  background: linear-gradient(to right, black, #27ae60);
 }
 
-.slider div{
-    border: 2px solid white;
-    border-radius: 30px;
-    padding: 10px 20px;
-    margin: 5px 7px;
-    display: inline;
-    cursor: pointer;
-    transition: 0.2s;
+.btnLeft:not(:disabled):hover {
+  background: linear-gradient(to left, black, #27ae60);
 }
 
-.slider div:hover{
-    background-color: white;
-    color:black;
+.hidden {
+  opacity: 0 !important;
+  cursor: default !important;
 }
 
-@media only screen and (max-width: 900px){
-    .flexDis{
-        grid-template-columns: 100%;
-    }
-
-    #response{
-        border-bottom: 3px solid black;
-        padding-bottom: 50px;
-    }
-
-    .flexCon{
-        min-height: 800px;
-    }
-
-    .btnRight:hover{
-        background: black;
-    }
-    
-    .btnLeft:hover{
-        background: black;
-    }
-
-    .btnRight img:hover{
-        background: #27ae60;
-    }
-    
-    .btnLeft img:hover{
-        background: #27ae60;
-    }
-
-    #response > *{
-        font-size: 16pt;
-    }
-
+.btnActive {
+  background-color: #27ae60;
 }
 
+.slider button {
+  border: 2px solid white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin: 5px 7px;
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.2s;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1.2;
+}
+
+.slider button:hover {
+  background-color: white;
+  color: black;
+}
+
+@media only screen and (max-width: 1200px) {
+  .flexDis {
+    padding: 60px 50px;
+    grid-gap: 40px;
+  }
+
+  .typed {
+    font-size: 19pt;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .flexDis {
+    grid-template-columns: 100%;
+    grid-gap: 30px;
+    padding: 40px 24px;
+    min-height: 0;
+  }
+
+  .response {
+    border-bottom: 3px solid black;
+    padding-bottom: 40px;
+  }
+
+  .typed {
+    font-size: 16pt;
+  }
+
+  /* The tab list wraps to show every question, so the arrows are not needed. */
+  .flexCon {
+    height: auto;
+    min-height: 0;
+    grid-template-columns: 1fr;
+    padding: 24px 12px;
+  }
+
+  .slider {
+    height: auto;
+  }
+
+  .btnArrow {
+    display: none;
+  }
+
+  .imgFigure figcaption {
+    margin-bottom: 24px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .flexDis {
+    padding: 32px 18px;
+    grid-gap: 24px;
+  }
+
+  .typed {
+    font-size: 14pt;
+  }
+
+  .slider button {
+    padding: 8px 16px;
+    margin: 4px 5px;
+  }
+}

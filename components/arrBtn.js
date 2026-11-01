@@ -1,24 +1,41 @@
+import Link from "next/link";
 import styles from "@/styles/arrBtn.module.css";
 
-export default function ArrBtn({ content, color, hoverColor , btnLink, newWin}) {
-    const buttonStyle = {
-      '--button-color': color,
-      '--button-hover-color': hoverColor,
-    };
-  
+function isExternal(link) {
+  return /^https?:\/\//i.test(link);
+}
+
+export default function ArrBtn({ content, color, hoverColor, btnLink, newWin }) {
+  const buttonStyle = {
+    "--button-color": color,
+    "--button-hover-color": hoverColor,
+  };
+
+  if (newWin || isExternal(btnLink)) {
     return (
-      <>
-        <button
-          className={styles.button}
-          style={buttonStyle}
-          onClick={() => {
-            if(newWin) window.open(btnLink, '_blank');
-            else window.location.href = btnLink;
-          }}
-        >
-        
+      <a
+        className={styles.button}
+        style={buttonStyle}
+        href={btnLink}
+        target={newWin ? "_blank" : undefined}
+        rel={newWin ? "noopener noreferrer" : undefined}
+      >
         <span>{content}</span>
-        </button>
-      </>
+      </a>
     );
   }
+
+  if (btnLink.startsWith("#")) {
+    return (
+      <a className={styles.button} style={buttonStyle} href={btnLink}>
+        <span>{content}</span>
+      </a>
+    );
+  }
+
+  return (
+    <Link className={styles.button} style={buttonStyle} href={btnLink}>
+      <span>{content}</span>
+    </Link>
+  );
+}

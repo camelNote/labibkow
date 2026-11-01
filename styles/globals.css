@@ -1,25 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Urbanist&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap');
+/* Fonts are self-hosted by next/font (see app/layout.js) and exposed as
+   CSS variables, so there are no render-blocking requests to Google Fonts. */
 
 * {
-  font-family: 'Urbanist', sans-serif;
+  font-family: var(--font-urbanist), sans-serif;
   margin: 0;
   padding: 0;
   text-decoration: none;
   box-sizing: border-box;
 }
 
-html{
+html {
   scroll-behavior: smooth;
   min-width: 100%;
 }
 
-body{
+body {
   background: #fefefe;
+  overflow-x: hidden;
 }
 
-p{
+p {
   word-break: break-word;
 }
 
@@ -44,50 +44,87 @@ p{
   background-color: #aaa;
 }
 
-.green{
-  color:#2ecc71;
+.green {
+  color: #2ecc71;
   font-weight: bold;
   font-size: 34pt;
 }
 
-#blockAlign{
+#blockAlign {
   width: 100%;
   height: 80px;
 }
 
-.navHead{
-  min-width:100%;
+/* Keyboard-only skip link */
+.skipLink {
+  position: absolute;
+  top: -100px;
+  left: 8px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: #11101b;
+  color: #fefefe;
+  border-radius: 0 0 8px 8px;
+  transition: top 0.2s ease;
+}
+
+.skipLink:focus {
+  top: 0;
+}
+
+/* Required attribution for the camel icon; not part of the visible design. */
+.creditLink {
+  display: none;
+}
+
+.navHead {
+  min-width: 100%;
   height: 80px;
   background: #11101b;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 100px; 
+  padding: 0 100px;
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 10;
 }
 
-.logo{
+.logo {
   font-size: 28px;
   font-weight: bold;
   color: #fefefe;
 }
 
-.hamburger{
+.hamburger {
   display: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
 }
 
-nav ul{
+.hamburger .line {
+  display: block;
+  width: 30px;
+  height: 3px;
+  background: #fefefe;
+  margin: 6px 0;
+}
+
+nav ul {
   display: flex;
   list-style: none;
 }
 
-.active{
+.active {
   color: #11101b;
   background: #fefefe;
 }
 
-nav ul li a{
+nav ul li a {
   display: block;
   color: #fefefe;
   font-size: 18px;
@@ -97,71 +134,81 @@ nav ul li a{
   margin: 0 5px;
 }
 
-nav ul li a:hover{
-  color:#11101b;
+nav ul li a:hover {
+  color: #11101b;
   background: #fefefe;
 }
 
-::selection{
+::selection {
   background: rgba(31, 189, 31, 0.829);
 }
 
-.hideNav{
+.hideNav {
   opacity: 0;
-  height:0;
+  height: 0;
   transition: 0.4s;
 }
 
-nav{
+nav {
   list-style: none;
 }
 
-@media only screen and (max-width: 1320px){
-  .navHead{
+/* The menu is collapsed by class at every width; above the breakpoint the
+   hamburger is hidden, so the nav is always shown. */
+@media only screen and (min-width: 901px) {
+  nav.hideNav {
+    opacity: 1;
+    height: auto;
+  }
+}
+
+@media only screen and (max-width: 1320px) {
+  .navHead {
     padding: 0 50px;
   }
 }
 
-@media only screen and (max-width: 1100px){
-  .navHead{
+@media only screen and (max-width: 1100px) {
+  .navHead {
     padding: 0 30px;
   }
 }
 
-@media only screen and (max-width: 900px){
-  .hamburger{
+@media only screen and (max-width: 900px) {
+  .hamburger {
     display: block;
-    cursor: pointer;
-  }
-  .hamburger .line{
-    width: 30px;
-    height: 3px;
-    background: #fefefe;
-    margin: 6px 0;
   }
 
-  nav{
+  nav {
     position: absolute;
-    top:80px;
-    left:0;
-    right:0;
-    min-width:100vw;
+    top: 80px;
+    left: 0;
+    right: 0;
+    min-width: 100vw;
     background-color: #11101b;
     transition: 0.2s;
     overflow: hidden;
   }
 
-  nav ul{
+  nav ul {
     display: block;
     width: fit-content;
-    margin:40px auto 0 auto;
+    margin: 40px auto 0 auto;
     text-align: center;
     transition: 0.6s;
   }
 
-  nav ul li a{
+  nav ul li a {
     margin-bottom: 20px;
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .navHead {
+    padding: 0 20px;
+  }
 
+  .logo {
+    font-size: 24px;
+  }
+}

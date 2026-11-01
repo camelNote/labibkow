@@ -1,6 +1,13 @@
 import StnBtn from "@/components/stnBtn";
 import Image from "next/image";
+import ImgBox from "@/components/imgBox";
 import styles from "@/styles/reflow.module.css";
+
+export const metadata = {
+    title: "Reflow Oven Controller",
+    description:
+        "ELEC 291 design project: an AT89LP51RC2-based reflow oven controller with a PID feedback loop, a finite state machine, and a Python monitoring GUI.",
+};
 
 export default function ReflowPage(){
     return (
@@ -50,12 +57,8 @@ export default function ReflowPage(){
                 <p>The aim of this project is to design and build a reflow oven controller that is capable of controlling the temperature profile of a reflow oven. The controller is based on the AT89LP51RC2 microcontroller and includes a user interface for setting the temperature profile, as well as temperature sensors for monitoring the temperature of the oven and the PCB. The project involves designing the hardware and software for the reflow oven controller, as well as testing and validating the controller to ensure that it meets the required specifications. The final product is a reflow oven controller that is capable of reliably controlling the temperature profile of a reflow oven, resulting in consistent and reliable soldering results.</p>
 
                 <div className={styles.imgCon}>
-                    <ImgBox id="img1" link="/project/reflowPics/software.jpg" fig="Figure 1:" text="Hardware block diagram" width="672" height="469" alt="ELEC 291 Ciruit block diagram"/>
-                    <div style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                    }}><ImgBox id="img2" link="/project/reflowPics/fsm.jpg" fig="Figure 2:" text="Controller FSM block diagram" width="672" height="378" alt="ELEC 291 Finite State Machine block diagram"/></div>
+                    <ImgBox id="img1" link="/project/reflowPics/software.jpg" fig="Figure 1:" text="Hardware block diagram" width={672} height={469} alt="ELEC 291 Ciruit block diagram"/>
+                    <div className={styles.imgCol}><ImgBox id="img2" link="/project/reflowPics/fsm.jpg" fig="Figure 2:" text="Controller FSM block diagram" width={672} height={378} alt="ELEC 291 Finite State Machine block diagram"/></div>
                 </div>
                 
 
@@ -69,9 +72,9 @@ export default function ReflowPage(){
                 <p>We collected data to find the relation between the voltage at the pin and the reading of the ADC which can be seen at Appendix D. We then fed the voltage obtained from excel into a formula from the LM335 datasheet to get the cold junction temperature. As for the hot junction temperature, we utilized its material property as a K-type thermocouple.</p>
                 <h4 id="i2d">Data Synthesis</h4>
                 <p>We used K-type thermocouple wire with a sensitivity of approximately 41 µV/°C to detect the temperature in the reflow oven. The voltage difference was amplified by the Op-Amp in which we chose a 300k and 1k ohm resistor to produce a voltage gain of 300. The output of the Op-Amp will be sent to MCP3008 ADC which the AT89LP51RC2 can read from, and convert to a temperature reading with the following formula,</p>
-                <Image quality={100} src="/project/reflowPics/f1.jpg" width={418} height={52} alt="OpAmp Formula" />
+                <Image src="/project/reflowPics/f1.jpg" width={418} height={52} alt="OpAmp Formula" />
                 <p>where ‘GAIN’ is our Op-Amp voltage gain.The output voltage of LM335[4]:</p>
-                <Image quality={100} src="/project/reflowPics/f2.jpg" width={145} height={40} alt="OpAmp Formula" />
+                <Image src="/project/reflowPics/f2.jpg" width={145} height={40} alt="OpAmp Formula" />
                 <p>where TO is the reference temperature in Kelvin and T is the measured temperature in Kelvin. The data then can be accessed by AT89LP51RC2 through the SPI bus.</p>
                 <h4 id="i2e">Anaylsis of Results</h4>
                 <p>Our team appraised the validity of conclusions through extensively testing the functionality of our controller and the reflow oven. We encountered oven and microcontroller limitations regarding the accuracy of the thermocouple readings in the oven and the accuracy of the calculations made on the microcontroller. For different locations in the oven, the temperature readings were not consistent. To attain the most accurate temperature, we positioned the thermocouple probe in the center of the oven where the PCB was placed. We also encountered rounding errors in our microcontroller calculations caused by the use of integer operations. This caused a sharp edge in the slope of the temperature readings to display in our temperature profile. For future improvements to our reflow oven controller, we plan to use a more advanced microcontroller that can support floating point operations.</p>
@@ -108,11 +111,7 @@ export default function ReflowPage(){
 
                 <div className={styles.imgCon}>
                     <ImgBox link="/project/reflowPics/c1.png" fig="Figure 4:" text="controller semi assembled" width={432*1.25} height={288*1.25} alt="ELEC 291 Controller semi-assembled"/>
-                    <div style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                    }}><ImgBox link="/project/reflowPics/c2.png" fig="Figure 5:" text="controller fully assembled" width={348*1.25} height={288*1.25} alt="ELEC 291 Controller fully assembled" quality={80}/></div>
+                    <div className={styles.imgCol}><ImgBox link="/project/reflowPics/c2.png" fig="Figure 5:" text="controller fully assembled" width={348*1.25} height={288*1.25} alt="ELEC 291 Controller fully assembled"/></div>
                 </div>
 
                 <h3 id="s1">Solution Assessment</h3>
@@ -120,7 +119,6 @@ export default function ReflowPage(){
                 <br />
 
                 <ImgBox link="/project/reflowPics/temp.png" width={520} height={699} fig="Figure 6:" text="Temperature verification; Multimeter test using thermometer" alt="Temperature verification"/>
-
                 <h3 id="l1">Life-Long Learning</h3>
                 <p>Although everyone in our group has different experience and skill sets, we found that the majority of the tasks in our project require us to use knowledge learned in previous courses or something new which we needed to self-learn. We found that CPEN 211 proved to be helpful for the assembly programming parts of the project and for understanding the microcontroller’s architecture, especially those that directly affect the way we code. We also found ELEC 221 to be quite useful for the Python portion of the project since we needed to use some of its libraries such as NumPy and MatPlotLib. Lastly, our knowledge of ELEC 201 material helped us design the Op-Amp circuit and debug the whole project circuit as a whole.</p>
                 <p>Even though a significant part of the project required knowledge previously learned in courses, many portions of the project required us to do our own research, one of which is how to implement a PID controller. We watched videos and browsed websites online to learn about PID controllers. Two courses that could have helped with this part of the project are ELEC 341 and ELEC 441 which talk about PID controllers more in depth. Moreover, we self-taught git version control and used Github to further make our collaboration more productive and to have backup copies of our code. For this reason, CPEN 421 is a course that could have been useful for organizing our coding design approach and organization. Some takeaways our group took from this project are to always refer to datasheets of the components and chips we use and understand it decently before beginning to code in assembly. We also realized that one members code is another members debugging job. To avoid confusion while debugging, we must put informative comments on the code and update each other about changes we make or are going to make.</p>
@@ -137,23 +135,6 @@ export default function ReflowPage(){
                 <p>RealPars, “What is a PID controller,” Youtube, December 2018.</p>
             </div>
             
-        </>
-    )
-}
-
-function ImgBox({link, ...rest}){
-    return (
-        <>
-        <div style={{
-            padding: "20px",
-            textAlign: "center",
-        }}>
-            <Image id={rest.id} src={link} width={rest.width} height={rest.height} alt={rest.alt} quality={rest.quality}/>
-            <p style={{
-                marginTop: "10px",
-            }}><b>{rest.fig}</b> {rest.text}</p>
-        </div>
-        
         </>
     )
 }

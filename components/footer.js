@@ -1,47 +1,51 @@
-import Image from "next/image"
-import Link from "next/link"
-import styles from "../styles/footer.module.css"
+import Image from "next/image";
+import Link from "next/link";
+import styles from "@/styles/footer.module.css";
+import githubIcon from "@/public/footer/githubBlack.svg";
+import linkedinIcon from "@/public/footer/linkedin.svg";
+import mailIcon from "@/public/footer/mail.svg";
 
-export default function Footer(){
-    const imageDim = 34;
-    const currentYear = new Date().getFullYear();
+const imageDim = 34;
 
-    return(
-        <>
-            <div className={styles.footerCon}>
-                <div className={styles.flex}>
-                    <Link href="https://github.com/camelNotationsdjkh">
-                        <Image 
-                        src={require("../public/footer/githubBlack.svg")}
-                        alt="Github Logo with link to my github"
-                        width={imageDim}
-                        height={imageDim}
-                        />
-                    </Link>
-                    
-                    <Link href="https://www.linkedin.com/in/labibkowsar/">
-                        <Image 
-                        src={require("../public/footer/linkedin.svg")}
-                        alt="Linkedin logo with link to my linkedin"
-                        width={imageDim}
-                        height={imageDim}
-                        />
-                    </Link>
+const externalLinks = [
+  {
+    href: "https://github.com/camelNotationsdjkh",
+    label: "GitHub",
+    icon: githubIcon,
+  },
+  {
+    href: "https://www.linkedin.com/in/labibkowsar/",
+    label: "LinkedIn",
+    icon: linkedinIcon,
+  },
+];
 
-                    <Link href="/contact">
-                        <Image 
-                        src={require("../public/footer/mail.svg")}
-                        alt="Mail  Logo with link to my email contact"
-                        width={imageDim}
-                        height={imageDim}
-                        />
-                    </Link>
+export default function Footer() {
+  const currentYear = new Date().getFullYear();
 
-                </div>
-                <div className={styles.flex}>
-                    <div>&copy; Labib Kowsar {currentYear} &trade;</div>
-                </div>
-            </div>
-        </>
-    )
+  return (
+    <footer className={styles.footerCon}>
+      <div className={styles.flex}>
+        {externalLinks.map(({ href, label, icon }) => (
+          <a
+            key={href}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${label} (opens in a new tab)`}
+          >
+            <Image src={icon} alt="" width={imageDim} height={imageDim} />
+          </a>
+        ))}
+
+        <Link href="/contact" aria-label="Contact me by email">
+          <Image src={mailIcon} alt="" width={imageDim} height={imageDim} />
+        </Link>
+      </div>
+
+      <div className={styles.flex}>
+        <div>&copy; Labib Kowsar {currentYear} &trade;</div>
+      </div>
+    </footer>
+  );
 }

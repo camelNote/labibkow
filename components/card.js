@@ -1,28 +1,32 @@
-import styles from "../styles/card.module.css";
+import Image from "next/image";
+import styles from "@/styles/card.module.css";
+import { cardImages } from "@/lib/projectImages";
+import { cardMeta } from "@/lib/projects";
 
-export default function Card({keyVal, ...rest}) {
-  //setKey, imgLink, text, themeColor, vis, setVis
-  const setKey = rest.setKey;
-  const imgLink = rest.imgLink;
-  const text = rest.text;
-  const themeColor = rest.themeColor;
-  const vis = rest.vis;
-  const setVis = rest.setVis;
-  
+export default function Card({ slug, onOpen, preload = false }) {
+  const meta = cardMeta[slug];
+  const image = cardImages[slug];
+
   return (
-    <>
-      <div className={styles.gridCard}  onClick={() => {
-        setVis(!vis);
-        setKey(keyVal);
-      }}>
-        <div className={styles.top} style={{
-          backgroundImage: `url(/project/${imgLink})`
-        }}>
-        </div>
-        <div className={styles.bottom} style={{
-          background: `${themeColor}`,
-        }}>{text}</div>
-      </div>
-    </>
+    <button
+      type="button"
+      className={styles.gridCard}
+      onClick={(event) => onOpen(slug, event)}
+      aria-haspopup="dialog"
+    >
+      <span className={styles.top}>
+        <Image
+          src={image}
+          alt=""
+          width={image.width}
+          height={image.height}
+          className={styles.image}
+          preload={preload}
+        />
+      </span>
+      <span className={styles.bottom} style={{ background: meta.color }}>
+        {meta.label}
+      </span>
+    </button>
   );
 }

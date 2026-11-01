@@ -1,61 +1,72 @@
-import Link from "next/link"
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react"
+"use client";
 
-export default function Navbar(){
-    const router = useRouter();
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
-    // Tracks whether viewport is in mobile mode.
-    const [isMobile, setIsMobile] = useState(false);
-    // Toggles the navbar only in mobile mode.
-    const [isMenuOpen, setMenuOpen] = useState(false);
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
+  // Kept hidden until the resume page is ready to be linked publicly.
+  { href: "/resume", label: "Resume", hidden: true },
+  { href: "/contact", label: "Contact" },
+];
 
-    useEffect(() => {
-        function handleResize() {
-          setIsMobile(window.innerWidth < 900);
-        }
-    
-        // Add event listener for window resize
-        window.addEventListener('resize', handleResize);
-    
-        // Call handleResize initially to set the initial window size
-        handleResize();
-    
-        // Remove event listener on cleanup
-        return () => window.removeEventListener('resize', handleResize);
-      }, []);
+function isActive(pathname, href) {
+  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
 
-    return (
-        <>
-        {
-            // Navigation html and CSS adapted from evlearn
-            // https://www.youtube.com/watch?v=dIFNHeHTja0
-        }
-        <div className="navHead">
-            <div className="logo">labibkow<span className="green">.</span></div>
-            <div className="hamburger" onClick={() => {
-                if (isMobile) setMenuOpen(!isMenuOpen);
-            }}>
-                <div className="line"></div>
-                <div className="line"></div>
-                <div className="line"></div>
-            </div>
-        
-            <nav className={(isMobile && !isMenuOpen) ? "hideNav" : ""}>
-                <ul>
-                    <li><Link href="/" className={(router.pathname == '/')? "active": ""} >Home</Link></li>
-                    <li><Link href="/projects" className={(router.pathname.includes('/projects'))? "active": ""}>Projects</Link></li>
-                    <li><Link href="/resume" className={(router.pathname.includes('/resume'))? "active": ""} style={{
-                        display: "none"
-                    }}>Resume</Link></li>
-                    <li><Link href="/contact" className={(router.pathname.includes('/contact'))? "active": ""}>Contact</Link></li>
-                </ul>
-            </nav>
-        </div>
-        {
-            // Does nothing but align the main content with the navbar
-        }
-        <div id="blockAlign"></div>
-        </>
-    )
+export default function Navbar() {
+  const pathname = usePathname();
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <>
+      <header className="navHead">
+        <Link href="/" className="logo">
+          labibkow<span className="green">.</span>
+        </Link>
+
+        <button
+          type="button"
+          className="hamburger"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+          aria-controls="primary-nav"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span className="line" />
+          <span className="line" />
+          <span className="line" />
+        </button>
+
+        <nav
+          id="primary-nav"
+          aria-label="Primary"
+          className={isMenuOpen ? undefined : "hideNav"}
+        >
+          <ul>
+            {links.map((link) => {
+              const active = isActive(pathname, link.href);
+
+              return (
+                <li key={link.href} hidden={link.hidden}>
+                  <Link
+                    href={link.href}
+                    className={active ? "active" : undefined}
+                    aria-current={active ? "page" : undefined}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </header>
+      {/* Aligns page content with the fixed navbar. */}
+      <div id="blockAlign" />
+    </>
+  );
 }

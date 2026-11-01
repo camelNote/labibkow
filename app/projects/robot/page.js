@@ -1,6 +1,13 @@
 import StnBtn from "@/components/stnBtn";
 import Image from "next/image";
+import ImgBox from "@/components/imgBox";
 import styles from "@/styles/reflow.module.css";
+
+export const metadata = {
+    title: "Magnetic Field Controlled Robot",
+    description:
+        "ELEC 291 design project: a wirelessly controlled robot car that uses low-frequency magnetic fields, an STM32L051, and an EFM8-based remote.",
+};
 
 export default function RobotPage(){
     return (
@@ -51,13 +58,9 @@ export default function RobotPage(){
                 <p>The project consists of two battery-powered devices: a remote and a robot. The remote is constructed using the EFM8 microcontroller to send movement commands to an electric motor-powered robot. The robot is based on the STM32L051 microcontroller and has two modes of operation: beacon/tracking mode and controller mode. In the tracking mode, the robot would maintain its angle and distance away from the remote. When toggled into the controller mode, the robot follows the directional commands sent by the joystick in the remote; directions such as North (relative to the robot), East, Southwest, etc. In this project, we designed the hardware and software of the robot car to best suit the needs of our stakeholder and specifications. Our final product reflects this goal, as the robot is capable of fine motor control over a moderate distance of 40 cm and is outfitted with useful features such as multi-colored RGB headlights, and a sonar powered obstacle detection and alarm system.</p>
 
                 <div className={styles.imgCon}>
-                <ImgBox id="img2" link="/project/robotPics/fig1.jpg" fig="Figure 2:" text="Software Block Diagram" width="1246" height="684" alt="ELEC 291 Software block diagram"/>
-                    <div style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                    }}>
-                        <ImgBox id="img2" link="/project/robotPics/soft1.jpg" fig="Figure 4:" text="Software diagram" width="1170" height="668" alt="ELEC 291 Software diagram"/>
+                <ImgBox id="img1" link="/project/robotPics/fig1.jpg" fig="Figure 2:" text="Software Block Diagram" width={1246} height={684} alt="ELEC 291 Software block diagram"/>
+                    <div className={styles.imgCol}>
+                        <ImgBox link="/project/robotPics/soft1.jpg" fig="Figure 4:" text="Software diagram" width={1170} height={668} alt="ELEC 291 Software diagram"/>
                     </div>
                 </div>
                 
@@ -73,13 +76,13 @@ export default function RobotPage(){
                 <p>During this project we collected data to help us properly implement certain features of the robot, mainly the frequency transmission from the controller, the receiver on the robot and the sonar sensor attached to the front of the robot. To ensure our controller was working and to test the range of the robot we attached an LED and capacitor to one of the spare inductors to help us see how strong the transmission was (see appendix E). Using this setup we were able to measure our range early on in the project before our receiver was fully implemented. As for the receiver, we were able to test the received signal using an oscilloscope measuring voltage across the inductor.. Additionally, we tested our sonar sensor using an oscilloscope and function generator setup as well. We attached one probe to the trigger pin and one probe to the echo pin of the sonar sensor. To confirm it was working as per the data sheet, we fed the trigger pin a square wave with a period of 10µs and tested whether the echo pin outputted correctly or not. We continued to probe the echo pin throughout the implementation of the sonar sensor to help us identify bugs easily and ensure the data collected matched the expected results (see appendix F).</p>
                 <h4 id="i2d">Data Synthesis</h4>
                 <h5>Transmitter</h5>
-                <Image quality={100} src="/project/robotPics/form1.jpg" width={617} height={118} alt="Transmitter Formula" />
+                <Image src="/project/robotPics/form1.jpg" width={617} height={118} alt="Transmitter Formula" />
                 <p>The timer clock is ticking at 72 MHz. The minimum frequency achievable with the auto-reloading 16 bit timer is 34.333 Hz with a prescaler of 5 and reload value of zero. With respect to data transmission, we used pulse-width modulation to define different commands. We made a prototype in the breadboard and tested the output in the oscilloscope. After testing it to make sure it can toggle between beacon mode and controller mode, we installed a joystick to implement.</p>
                 <h5>Receiver</h5>
                 <p>For the amplifier part, we chose a 56k resistor and a 1k resistor, which generate a gain of 56 in the non-inverted amplifier (LM358P) and we made sure the voltage gain is appropriate to feed to the peak detector. Since two tank circuits showed different voltages when they are in the same distance from the transmitter, we added an extra amplifier to correct the voltage.</p>
                 <h5>Sonar</h5>
                 <p>We used the HC-SR04 sensor which has a range from 2 cm to 400 cm and 15 degrees measuring angle. We first tested sonar alone and observed the waveform changes in the oscilloscope to see its response to the objects. Which we programmed using the formula:</p>
-                <Image quality={100} src="/project/robotPics/form2.jpg" width={278} height={81} alt="Sonar Formula" />
+                <Image src="/project/robotPics/form2.jpg" width={278} height={81} alt="Sonar Formula" />
                 <p>Our group synthesized data by firstly figuring out design requirements, then building prototypes and debugging in electronic devices. We decomposed the project and assembled components piece by piece. Finally, we focused on extra features and explored methods for higher standards.</p>
 
                 <h4 id="i2e">Anaylsis of Results</h4>
@@ -90,10 +93,7 @@ export default function RobotPage(){
                 <p>To create our overall design approach, we first discussed all the main tasks of the project and split them into three main categories: the transmitter and controller, the receiver and car, and the sonar functionality and extra features. Our group split into three focus groups, each designing one of the aforementioned categories. Each subteam would share their ideas and progress to the rest of the team, where we collectively explored the ideas further using whiteboard drawings and voted on which ideas to implement. This approach allowed everyone to focus on specific aspects of the project, while allowing everyone to contribute and have an understanding of the project as a whole. </p>
                 <h4 id="d1b">Need and Constraint Identification</h4>
                 <p>Our stakeholders include anyone who needs a small robotic car that utilizes low frequency electromagnetic fields to communicate. For the needs of our stakeholders to be met [3], our robotic car must have:</p>
-                <ol style={{
-                    marginLeft: "20px",
-                    fontSize: "14pt",
-                }}>
+                <ol className={styles.numberedList}>
                     <li>Accurate and reliable movement.</li>
                     <li>Controls that are intuitive and easy to use.</li>
                     <li>A reasonably long range of communication.</li>
@@ -103,10 +103,7 @@ export default function RobotPage(){
                 <p>Possible applications of this technology include robots that can operate effectively in hazardous environments, small spaces, or even underwater. The effectiveness of this technology is predominantly constrained by the maximum range that reliable signals can be received. This is due to the fact that nearly all projects in which this technology is utilized benefits greatly from a great signal range.</p>
                 <h4 id="d1c">Problem Specification</h4>
                 <p>Based on the stakeholder needs listed above, our team decided that our remote controlled car must fulfill the following requirements:</p>
-                <ol style={{
-                    marginLeft: "20px",
-                    fontSize: "14pt",
-                }}>
+                <ol className={styles.numberedList}>
                     <li>The robot and the remote are battery powered.</li>
                     <li>The system has two modes: tracking mode and controlled mode. In tracking mode, the car maintains a fixed distance from the controller, while controlled mode allows the car to be controlled by a joystick.</li>
                     <li>Negligible delay when responding to commands sent by the controller.</li>
@@ -134,35 +131,31 @@ export default function RobotPage(){
                 <h5>Robot</h5>
                 <p>There are two H-bridges which drive two motors separately, these H-bridges are controlled using two pins each connected from the microcontroller. To drive a motor, the inputs of the corresponding H-bridge must have alternate voltages and depending on which side is high, the motor spins forward or backward. The H-bridges are powered using a separate battery (6V) which decouples the noise from the motor from the rest of the robot’s system.</p>
                 <p>The receivers were designed with simplicity in mind which reduced the number of components that were needed. The gain of the Op-Amp was chosen such that the noise was minimal and there is enough range. The voltage on the inverting input of the comparator was chosen such that the output is still high when the transmitter is barely outside of the range (this enabled the robot to know when to change mode).</p>
-                <ImgBox id="img2" link="/project/robotPics/code1.jpg" fig="Figure 3:" text="Rainbow Function code" width="657" height="170" alt="ELEC 291 Rainbow function code"/>
+                <ImgBox link="/project/robotPics/code1.jpg" fig="Figure 3:" text="Rainbow Function code" width={657} height={170} alt="ELEC 291 Rainbow function code"/>
                 <p>There are three WS2812B addressable RGB LEDs connected in series, two of which function as tail lights and the last one is for underglow. In the tracking mode, the tail lights and the underglow both cycle color whereas in controlled mode, the tail lights function like a car’s tail lights (brake light, reverse light, etc.) and the underglow remains the same.</p>
                 
                 <p>There is a sonar sensor which enables the robot to know if there is an obstacle or not in front of it. The robot uses a timer in both PWM mode and input capture mode to trigger the sonar and read the distance respectively. This way the reading is non-blocking which increases the overall performance of the robot. There is a buzzer circuit which is controlled using a pin from the microcontroller. This buzzer is activated whenever there is an obstacle within 3cm of the robot.</p>
                 <h5>Remote</h5>
 
-                <ImgBox id="img2" link="/project/robotPics/soft1.jpg" fig="Figure 4:" text="Software diagram" width="1170" height="668" alt="ELEC 291 Software diagram"/>
+                <ImgBox link="/project/robotPics/soft1.jpg" fig="Figure 4:" text="Software diagram" width={1170} height={668} alt="ELEC 291 Software diagram"/>
 
                 <p>The center of the remote is the H-bridge which drives the LC circuit at its resonance frequency to achieve high voltages. The H-bridge is driven by the EFM8 which has two pins,  out0 and out0. Both pins are toggled at a frequency of approximately 32kHz, creating a sine wave with a frequency of 16kHz across the inductor. This resonates with the LC circuit creating a large peak to peak voltage and a high current flow, which is what we need to create the magnetic radiation for coupled inductance.</p>
                 <p>In order to turn the carrier signal of 16 kHz into a data transmission, we used a second timer, TR2, to enable and disable timer zero. During beacon mode, timer 0 never turns off, creating a constant signal on the robot. When using manual control, the controller creates constant length pulses of the carrier signal being enabled, followed by variable length periods of the signal being off. By controlling the length of the gaps between the pulses, we are able to encoding commands, which can be decoded on the robot. </p>
-                <ImgBox id="img2" link="/project/robotPics/coord1.jpg" fig="Figure 5:" text="The numbering system for joystick directions
-" width="793" height="618" alt="ELEC 291 Numbering system for joystick directions
+                <ImgBox link="/project/robotPics/coord1.jpg" fig="Figure 5:" text="The numbering system for joystick directions
+" width={793} height={618} alt="ELEC 291 Numbering system for joystick directions
 "/>
                 <p>The main loop of the code on the controller is responsible for reading the users input. First checking if the joystick has been pressed, and switching states if it has. If the current state is beacon mode, the delay between pulses is set to zero, otherwise the pulse delay is set based on the ADC readings of the two pins connected to the potentiometer. </p>
 
                 <h3 id="s1">Solution Assessment</h3>
                 <p>To ensure that our robot passed all the requirements and fulfilled the needs of our stakeholders, we evaluated the accuracy and performance of the full robotic system. In order to test the range and accuracy of our signals, we measured the transmitted and received signal, as well as the distance of the robot from the controller. In our first test, we encoded our signal by varying the duty cycle of the signal and measured each signal at intermittent distances of separation.</p>
                 <div className={styles.imgCon}>
-                <ImgBox id="img2" link="/project/robotPics/pwm1.jpg" fig="Figure 6:" text="PWM Encoded Signal Data Plot" width="793" height="618" alt="ELEC 291 PWM Encoded Signal Data Plot"/>
-                    <div style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                    }}><ImgBox id="img2" link="/project/robotPics/pwm2.jpg" fig="Figure 7:" text="Sonar Distance Reading Data Plot" width="793" height="618" alt="ELEC 291 Sonar Distance Reading Data Plot"/></div>
+                <ImgBox link="/project/robotPics/pwm1.jpg" fig="Figure 6:" text="PWM Encoded Signal Data Plot" width={793} height={618} alt="ELEC 291 PWM Encoded Signal Data Plot"/>
+                    <div className={styles.imgCol}><ImgBox link="/project/robotPics/pwm2.jpg" fig="Figure 7:" text="Sonar Distance Reading Data Plot" width={793} height={618} alt="ELEC 291 Sonar Distance Reading Data Plot"/></div>
                 </div>
                 <p>From our results, we determined that the signal our robot received was not consistent with the signal sent by the controller. We noticed that since the rise and fall time of the signal changes depending on the peak voltage, as the distance from the remote changes, the signal gets distorted. From this observation, our team decided to encode our signals using frequency modulation.</p>
                 
-                <ImgBox id="img2" link="/project/robotPics/pwm3.jpg" fig="Figure 8:" text="The numbering system for joystick directions
-                    " width="793" height="618" alt="ELEC 291 Numbering system for joystick directions
+                <ImgBox link="/project/robotPics/pwm3.jpg" fig="Figure 8:" text="The numbering system for joystick directions
+                    " width={793} height={618} alt="ELEC 291 Numbering system for joystick directions
                     "/>
                 <p>From our new data, we observed that the frequency modulation encoding had the same rise and fall time changes, but shifts the whole signal and automatically compensates for the distortion. We also tested the accuracy of our sonar sensors, measuring the actual distance between our sensor and a wall at varying distances.</p>
                 <p>We found that our sonar distance measurements and calculations were consistent with the actual distance from the wall. Based on our system analysis, our project excelled in consistently reading signal commands and sonar signals accurately, but lacked a long signal transmission range. In the future, we will build on these strengths and weaknesses to develop a more complete system.</p>
@@ -182,23 +175,6 @@ export default function RobotPage(){
                 <p>How to Mechatronics, “Ultrasonic Sensor HC-SR04 Tutorial”, Youtube, July, 2015</p>
             </div>
             
-        </>
-    )
-}
-
-function ImgBox({link, ...rest}){
-    return (
-        <>
-        <div style={{
-            padding: "20px",
-            textAlign: "center",
-        }}>
-            <Image id={rest.id} src={link} width={rest.width} height={rest.height} alt={rest.alt} quality={rest.quality}/>
-            <p style={{
-                marginTop: "10px",
-            }}><b>{rest.fig}</b> {rest.text}</p>
-        </div>
-        
         </>
     )
 }
